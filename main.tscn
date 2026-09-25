@@ -68,10 +68,13 @@ script = ExtResource("3_h2yge")
 position = Vector2(1600, 700)
 
 [node name="Score" type="RichTextLabel" parent="." unique_id=173531682]
-offset_right = 393.0
-offset_bottom = 40.0
+offset_left = -380.0
+offset_top = -214.0
+offset_right = 13.0
+offset_bottom = -174.0
 theme_override_font_sizes/normal_font_size = 31
 text = "Score"
+scroll_active = false
 script = ExtResource("4_1bvp3")
 
 [connection signal="body_entered" from="Dead" to="Player" method="_on_death_body_entered"]

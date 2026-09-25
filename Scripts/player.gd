@@ -66,16 +66,10 @@ func _physics_process(delta: float) -> void:
 	 
 	#correction
 	if self.get_rotation() < 0:
-		self.rotate(0.05)
+		self.rotate(0.02)
 	if self.get_rotation() > 0: 
-		self.rotate(-0.05)
-		#print(self.get_rotation_degrees())
-		#
-		#if self.get_rotation_degrees() < 0:
-	#		rotate_velocity += 1
-	#	if self.get_rotation_degrees() > 0:
-	#		rotate_velocity -= 5
-	
+		self.rotate(-0.02)
+		
 	#rotation
 	self.rotate((rotate_velocity / 10) * delta)
 	

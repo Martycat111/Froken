@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://debs7qr57rnms"]
+
+[ext_resource type="Script" uid="uid://bacqxumgdixvs" path="res://Scripts/player.gd" id="1_1bvp3"]
+[ext_resource type="Script" uid="uid://dluo04qt6etro" path="res://Scripts/spawner.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://bn6cpuux0f4k2" path="res://score.gd" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://cw1wbxttywpdc" path="res://Images/bir.png" id="4_lquwl"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2b7dg"]
+radius = 120.39465
+height = 453.9475
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpr32"]
+size = Vector2(207, 1201)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_deeij"]
+size = Vector2(1994, 163)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nn2jn"]
+size = Vector2(1922, 110)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(294, 1416)
+
+[node name="Node2D" type="Node2D" unique_id=583196749]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=640239660]
+offset = Vector2(575, 323)
+zoom = Vector2(0.6, 0.6)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=2088081453]
+position = Vector2(556, 328)
+scale = Vector2(0.50666666, 0.50666666)
+script = ExtResource("1_1bvp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1890779024]
+position = Vector2(9.868408, 9.868347)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_2b7dg")
+
+[node name="Player" type="Sprite2D" parent="Player" unique_id=871632026]
+texture = ExtResource("4_lquwl")
+
+[node name="Dead" type="Area2D" parent="." unique_id=1433644209]
+position = Vector2(2100, 400)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Dead" unique_id=396636942]
+position = Vector2(-2663, -101.5)
+shape = SubResource("RectangleShape2D_gpr32")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Dead" unique_id=732646070]
+position = Vector2(-1546, 613)
+shape = SubResource("RectangleShape2D_deeij")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dead" unique_id=436581556]
+position = Vector2(-1553, -744)
+shape = SubResource("RectangleShape2D_nn2jn")
+
+[node name="MoveBack" type="Area2D" parent="." unique_id=707517749]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MoveBack" unique_id=803790033]
+position = Vector2(1679, 336)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="Spawner" type="Node2D" parent="." unique_id=545493855]
+script = ExtResource("3_h2yge")
+
+[node name="Objects" type="Node2D" parent="." unique_id=374210569]
+position = Vector2(1600, 700)
+
+[node name="Score" type="RichTextLabel" parent="." unique_id=173531682]
+offset_right = 393.0
+offset_bottom = 40.0
+theme_override_font_sizes/normal_font_size = 31
+text = "Score"
+script = ExtResource("4_1bvp3")
+
+[connection signal="body_entered" from="Dead" to="Player" method="_on_death_body_entered"]
+[connection signal="body_entered" from="MoveBack" to="Player" method="_on_move_back_body_entered"]

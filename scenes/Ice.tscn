@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://b2tu7ll7j0e87"]
+
+[ext_resource type="Script" uid="uid://bs0dk1t3han08" path="res://Scripts/ice.gd" id="1_elvet"]
+[ext_resource type="Texture2D" uid="uid://doa31ru0w2xbg" path="res://Images/ice.png" id="2_elvet"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2b7dg"]
+radius = 23.086792
+
+[node name="Ice" type="RigidBody2D" unique_id=1250953314]
+gravity_scale = 0.0
+script = ExtResource("1_elvet")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1152934043]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_elvet")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1543068507]
+scale = Vector2(0.3, 0.3)
+polygon = PackedVector2Array(-642, -155, -693, 587, 859, 604, 889, 38, 801, 62, 675, 83, 531, 98, 368, 92, 197, 79, 12, 55, -129, 21, -288, -32, -425, -82, -549, -116)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=947250232]
+position = Vector2(300, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=527664343]
+shape = SubResource("CircleShape2D_2b7dg")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

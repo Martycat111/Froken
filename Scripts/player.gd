@@ -19,9 +19,9 @@ var hold_timeout = 0.5
 var hold_time = 0
 
 var time_since_last_speedup = 0
-var speedup = 0
+var speedup = 0 #current speedup
 var speedup_frequency = 2
-var speedup_amount = 0
+var speedup_amount = 5 #speedup increment
 
 # x = 1400 y = 800
 func _physics_process(delta: float) -> void:
@@ -66,25 +66,25 @@ func _physics_process(delta: float) -> void:
 	 
 	#correction
 	if self.get_rotation() < 0:
-		self.rotate(0.02)
+		self.rotate(0.03)
 	if self.get_rotation() > 0: 
-		self.rotate(-0.02)
+		self.rotate(-0.03)
 		
 	#rotation
 	self.rotate((rotate_velocity / 10) * delta)
 	
 	position.x += x_velocity * delta
-	if x_velocity > 1:
+	if x_velocity > 2:
 		x_velocity -= x_drag * delta
-	if x_velocity < -1:
+	if x_velocity < -2:
 		x_velocity += x_drag * delta
 	time_since_hit_spin += delta
 	time_since_last_speedup += delta
-	move_and_slide()
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
+	var collision = move_and_collide(velocity * delta)
+	if collision:
 		if collision.get_collider().name == "Ice":
-			x_velocity = 0                                                           
+			velocity.y += velocity.x
+			#velocity.y = 0
 
 func add_rotate_velocity(amount):
 	rotate_velocity += amount
@@ -109,7 +109,7 @@ func hitspin():
 		Global.score += 10
 		time_since_hit_spin = 0
 		holding = false
-		rotate_velocity += 90	
+		rotate_velocity += 90
 		velocity.y = 0 - spin_add_velocity
 
 func hitmove():

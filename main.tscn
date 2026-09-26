@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bacqxumgdixvs" path="res://Scripts/player.gd" id="1_1bvp3"]
 [ext_resource type="Script" uid="uid://dluo04qt6etro" path="res://Scripts/spawner.gd" id="3_h2yge"]
-[ext_resource type="Script" uid="uid://bn6cpuux0f4k2" path="res://score.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://bn6cpuux0f4k2" path="res://Scripts/score.gd" id="4_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://cw1wbxttywpdc" path="res://Images/bir.png" id="4_lquwl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2b7dg"]
 radius = 120.39465
-height = 453.9475
+height = 426.31592
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gpr32"]
 size = Vector2(207, 1201)
@@ -21,6 +21,43 @@ size = Vector2(1922, 110)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(294, 1416)
 
+[sub_resource type="Animation" id="Animation_1bvp3"]
+resource_name = "Add"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_colors/default_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0.89452964, 0.46957612, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_lquwl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_colors/default_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7mycd"]
+_data = {
+&"Add": SubResource("Animation_1bvp3"),
+&"RESET": SubResource("Animation_lquwl")
+}
+
 [node name="Node2D" type="Node2D" unique_id=583196749]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=640239660]
@@ -33,7 +70,7 @@ scale = Vector2(0.50666666, 0.50666666)
 script = ExtResource("1_1bvp3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1890779024]
-position = Vector2(9.868408, 9.868347)
+position = Vector2(15.789461, 7.894723)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_2b7dg")
 
@@ -65,17 +102,23 @@ shape = SubResource("RectangleShape2D_h2yge")
 script = ExtResource("3_h2yge")
 
 [node name="Objects" type="Node2D" parent="." unique_id=374210569]
-position = Vector2(1600, 700)
+position = Vector2(2000, 700)
 
 [node name="Score" type="RichTextLabel" parent="." unique_id=173531682]
-offset_left = -380.0
-offset_top = -214.0
-offset_right = 13.0
-offset_bottom = -174.0
-theme_override_font_sizes/normal_font_size = 31
-text = "Score"
+offset_left = -375.0
+offset_top = -216.0
+offset_right = 313.0
+offset_bottom = -141.0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 34
+theme_override_font_sizes/normal_font_size = 47
+text = " 0"
 scroll_active = false
 script = ExtResource("4_1bvp3")
+
+[node name="ScoreAnim" type="AnimationPlayer" parent="Score" unique_id=1690959736]
+libraries/ = SubResource("AnimationLibrary_7mycd")
 
 [connection signal="body_entered" from="Dead" to="Player" method="_on_death_body_entered"]
 [connection signal="body_entered" from="MoveBack" to="Player" method="_on_move_back_body_entered"]

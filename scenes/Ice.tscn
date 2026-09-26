@@ -6,6 +6,14 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_2b7dg"]
 radius = 23.086792
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2b7dg"]
+radius = 22.613163
+height = 340.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1tyn0"]
+radius = 19.85171
+height = 141.5343
+
 [node name="Ice" type="RigidBody2D" unique_id=1250953314]
 gravity_scale = 0.0
 script = ExtResource("1_elvet")
@@ -22,6 +30,20 @@ polygon = PackedVector2Array(-642, -155, -693, 587, 859, 604, 889, 38, 801, 62, 
 position = Vector2(300, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=527664343]
+position = Vector2(-5, -9)
 shape = SubResource("CircleShape2D_2b7dg")
 
+[node name="Is on ice" type="Area2D" parent="." unique_id=76999571]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Is on ice" unique_id=1362213755]
+position = Vector2(-28, -18)
+rotation = 1.8029251
+shape = SubResource("CapsuleShape2D_2b7dg")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Is on ice" unique_id=2008640735]
+position = Vector2(199, 5)
+rotation = 1.4835298
+shape = SubResource("CapsuleShape2D_1tyn0")
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Is on ice" to="." method="_on_is_on_ice_body_entered"]

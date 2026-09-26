@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cj08ke2ffhny3"]
 
-[ext_resource type="Script" uid="uid://csceme2rwdwjr" path="res://hitmove.gd" id="1_6m8cn"]
+[ext_resource type="Script" uid="uid://csceme2rwdwjr" path="res://Scripts/hitmove.gd" id="1_6m8cn"]
 [ext_resource type="Texture2D" uid="uid://w5uqogchchd3" path="res://Images/move.png" id="2_dmwmk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2b7dg"]

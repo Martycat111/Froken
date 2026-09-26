@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://gq0h5wrssr4h"]
+
+[ext_resource type="Texture2D" uid="uid://busianeoev3r6" path="res://Images/Ice/1.png" id="1_g1bhx"]
+[ext_resource type="Script" uid="uid://mom38vqfooqp" path="res://Scripts/ice_general.gd" id="2_dnnup"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_na4wi"]
+radius = 75.75006
+height = 796.8309
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gpr32"]
+radius = 73.97925
+height = 764.0049
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_deeij"]
+radius = 66.666664
+height = 440.0
+
+[node name="Ice" type="RigidBody2D" unique_id=1220415166]
+script = ExtResource("2_dnnup")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=973644324]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_g1bhx")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1241613232]
+scale = Vector2(0.3, 0.3)
+polygon = PackedVector2Array(-1000, 380, -940, 360, -853.3333, 346.66666, -766.6666, 346.66666, -686.6666, 366.66666, -573.3333, 366.66666, -473.3333, 386.66666, -380, 420, -213.33333, 446.66666, -13.333333, 486.66666, 240, 500, 480, 493.3333, 600, 466.66666, 686.6666, 440, 780, 426.66666, 886.6666, 400, 966.6666, 393.3333, 1000, 380, 1000, 1000, -1000, 993.3333)
+
+[node name="Is on ice" type="Area2D" parent="." unique_id=506361278]
+scale = Vector2(0.3, 0.3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Is on ice" unique_id=46816915]
+position = Vector2(593.3333, 359.99997)
+rotation = 1.3875368
+shape = SubResource("CapsuleShape2D_na4wi")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Is on ice" unique_id=1634466045]
+position = Vector2(-173.33334, 353.33334)
+rotation = 1.6982054
+shape = SubResource("CapsuleShape2D_gpr32")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Is on ice" unique_id=389389445]
+position = Vector2(-773.3333, 300)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_deeij")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Is on ice" to="." method="_on_is_on_ice_body_entered"]

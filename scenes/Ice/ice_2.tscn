@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://ciwtts1vbkebn"]
+
+[ext_resource type="Script" uid="uid://mom38vqfooqp" path="res://Scripts/ice_general.gd" id="1_ncanv"]
+[ext_resource type="Texture2D" uid="uid://bow8k45i5of7i" path="res://Images/Ice/2.png" id="2_ncanv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_na4wi"]
+radius = 75.75006
+height = 796.8309
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gpr32"]
+radius = 73.97925
+height = 573.3333
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_deeij"]
+radius = 68.614685
+height = 787.15
+
+[node name="Ice" type="RigidBody2D" unique_id=1220415166]
+mass = 1000.0
+lock_rotation = true
+freeze = true
+script = ExtResource("1_ncanv")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=973644324]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_ncanv")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1241613232]
+scale = Vector2(0.3, 0.3)
+polygon = PackedVector2Array(-993.3333, 380, -926.6666, 336.66666, -856.6666, 283.3333, -790, 243.33333, -703.3333, 200, -583.3333, 140, -483.3333, 100, -403.3333, 66.666664, -293.3333, 30, -206.66666, 13.333333, -103.33333, 3.3333333, -3.3333333, 6.6666665, 90, 3.3333333, 193.33333, 10, 273.3333, 20, 330, 43.333332, 403.3333, 70, 460, 83.33333, 516.6666, 106.666664, 593.3333, 146.66666, 676.6666, 180, 753.3333, 233.33333, 836.6666, 270, 903.3333, 310, 983.3333, 346.66666, 996.6666, 1000, -1000, 1003.3333)
+
+[node name="Is on ice" type="Area2D" parent="." unique_id=506361278]
+scale = Vector2(0.3, 0.3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Is on ice" unique_id=46816915]
+position = Vector2(643.3334, 110.00003)
+rotation = 2.0333085
+shape = SubResource("CapsuleShape2D_na4wi")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Is on ice" unique_id=1634466045]
+position = Vector2(13.333336, -80)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_gpr32")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Is on ice" unique_id=389389445]
+position = Vector2(-633.33325, 86.66666)
+rotation = 1.1047934
+shape = SubResource("CapsuleShape2D_deeij")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Is on ice" to="." method="_on_is_on_ice_body_entered"]

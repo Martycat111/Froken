@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://d1ahp8ksedujo"]
+
+[ext_resource type="Script" uid="uid://mom38vqfooqp" path="res://Scripts/ice_general.gd" id="1_s3csn"]
+[ext_resource type="Texture2D" uid="uid://du8ogwnucly3c" path="res://Images/Ice/3.png" id="2_s3csn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_na4wi"]
+radius = 75.75006
+height = 928.27905
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gpr32"]
+radius = 73.97925
+height = 573.3333
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_deeij"]
+radius = 68.614685
+height = 787.15
+
+[node name="Ice" type="RigidBody2D" unique_id=1220415166]
+mass = 1000.0
+lock_rotation = true
+freeze = true
+script = ExtResource("1_s3csn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=973644324]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_s3csn")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1241613232]
+scale = Vector2(0.3, 0.3)
+polygon = PackedVector2Array(-996.6666, 370, -903.3333, 480, -806.6666, 566.6666, -736.6666, 636.6666, -646.6666, 713.3333, -546.6666, 766.6666, -453.3333, 833.3333, -360, 893.3333, -260, 903.3333, -76.666664, 863.3333, 63.333332, 853.3333, 153.33333, 830, 283.3333, 743.3333, 393.3333, 683.3333, 473.3333, 630, 576.6666, 563.3333, 706.6666, 486.66666, 840, 410, 903.3333, 383.3333, 976.6666, 343.3333, 1010, 336.66666, 1000, 1003.3333, -1003.3333, 996.6666)
+
+[node name="Is on ice" type="Area2D" parent="." unique_id=506361278]
+scale = Vector2(0.3, 0.3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Is on ice" unique_id=46816915]
+position = Vector2(533.3334, 486.6667)
+rotation = 0.98611104
+shape = SubResource("CapsuleShape2D_na4wi")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Is on ice" unique_id=1634466045]
+position = Vector2(-116.66666, 766.66656)
+rotation = 1.4538592
+shape = SubResource("CapsuleShape2D_gpr32")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Is on ice" unique_id=389389445]
+position = Vector2(-670, 543.3333)
+rotation = 2.268928
+shape = SubResource("CapsuleShape2D_deeij")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Is on ice" to="." method="_on_is_on_ice_body_entered"]

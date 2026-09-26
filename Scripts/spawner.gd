@@ -7,9 +7,15 @@ var Ice = load("res://scenes/Ice.tscn")
 @onready var Player = get_node("../Player")
 
 var ice1 = load("res://scenes/Ice/ice_1.tscn")
+var ice2 = load("res://scenes/Ice/ice_2.tscn")
+var ice3 = load("res://scenes/Ice/ice_3.tscn")
+var ice4 = load("res://scenes/Ice/ice_4.tscn")
 
 var timesincespawn = 0
 var spawninterval
+var chance
+
+var lastice = 0
 
 #speedup ratio to normal
 #normal is 300
@@ -19,7 +25,7 @@ var speedup_ratio = 1
 func _process(delta: float) -> void:
 	speedup_ratio = float((300 + Global.speedup)) / 300
 	timesincespawn += delta
-	spawninterval = 2 / float(speedup_ratio)
+	spawninterval = 1.995 / float(speedup_ratio)
 	if timesincespawn > spawninterval:
 		spawn()
 		timesincespawn = 0
@@ -41,7 +47,18 @@ func spawnice(ypos = null):
 func spawnice1():
 	var instance = ice1.instantiate()
 	Objects.add_child(instance)
-	#instance.position.y = 200
+
+func spawnice2():
+	var instance = ice2.instantiate()
+	Objects.add_child(instance)
+	
+func spawnice3():
+	var instance = ice3.instantiate()
+	Objects.add_child(instance)
+
+func spawnice4():
+	var instance = ice4.instantiate()
+	Objects.add_child(instance)
 
 
 func spawn():
@@ -54,6 +71,23 @@ func spawn():
 	#if chance < 0.5 and chance > 0.3:
 	#	spawnice()
 
+func rollchance():
+	chance = randf()
 
 func spawnbase():
-	spawnice1()
+	rollchance()
+	if chance > 0.33 and chance < 0.66:
+		if lastice != 1:
+			lastice = 1
+			spawnice1()
+		else: spawnice4()
+	if chance < 0.33:
+		if lastice != 2:
+			lastice = 2
+			spawnice2()
+		else: spawnice4()
+	if chance > 0.66:
+		if lastice != 3:
+			lastice = 3
+			spawnice3()
+		else: spawnice4()

@@ -14,11 +14,12 @@ var spawninterval
 #speedup ratio to normal
 #normal is 300
 # 300 + Globals.speedup / 300
-var speedup_ratio = 1
 
+var speedup_ratio = 1
 func _process(delta: float) -> void:
+	speedup_ratio = float((300 + Global.speedup)) / 300
 	timesincespawn += delta
-	spawninterval = 1.98 / float(speedup_ratio)
+	spawninterval = 2 / float(speedup_ratio)
 	if timesincespawn > spawninterval:
 		spawn()
 		timesincespawn = 0
@@ -45,8 +46,6 @@ func spawnice1():
 
 func spawn():
 	spawnbase()
-	print(float((300 + Global.speedup)) / 300)
-	speedup_ratio = float((300 + Global.speedup)) / 300
 	#var chance = randf()
 	#if chance > 0.5:
 	#	spawnmove()

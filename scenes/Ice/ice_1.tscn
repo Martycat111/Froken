@@ -16,6 +16,9 @@ radius = 66.666664
 height = 440.0
 
 [node name="Ice" type="RigidBody2D" unique_id=1220415166]
+mass = 1000.0
+lock_rotation = true
+freeze = true
 script = ExtResource("2_dnnup")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=973644324]

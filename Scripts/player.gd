@@ -23,10 +23,34 @@ var speedup_amount = 10 #speedup increment
 
 var tempspeedup = 0 # current amount of temporary speedup
 var tempspeed = false #temporary speedup is active
-var tempspeedslowdown = 300 #amount to take off the temporary speedup (drag)
+var tempspeedslowdown = 3000 #amount to take off the temporary speedup (drag)
 
-# x = 1400 y = 800
+#jumps left
+var floorjumpamount = 3 #number of jumps when on floor
+var numjumpsleft = 4 #current number of jumps
+var canjump = true
+
+#was on floor
+var wasonfloor = false
+var was_check_rate = 0.5 #check every _ seconds
+var was_time_since_check = 0 
+
+var time_on_floor = 0
+var current_floor_session_max_angle = 0
+
+
+var DEBUG = true
+
 func _physics_process(delta: float) -> void:
+	#jump count and stop
+	if numjumpsleft < 0 or numjumpsleft == 0:
+		canjump = false
+	
+	#set jumps if on floor
+	if is_on_floor():
+		numjumpsleft = floorjumpamount
+		canjump = true
+	
 	#always go to the same place
 	if position.x > 556.0: 
 		position.x -= 3
@@ -62,6 +86,10 @@ func _physics_process(delta: float) -> void:
 	if rotate_velocity > rotate_terminal_velocity:
 		rotate_velocity = rotate_terminal_velocity
 	
+	#rotate with speed
+	if 300 + Global.speedup > 350:
+		rotate_velocity += (300 + Global.speedup) / 500
+	
 	#gravity
 	velocity += get_gravity() * delta
 	#hold time
@@ -70,7 +98,6 @@ func _physics_process(delta: float) -> void:
 	if time_since_last_speedup > speedup_frequency: 
 		Global.speedup += speedup_amount
 		time_since_last_speedup = 0
-		print(Global.speedup)
 	if Global.speedup > 2000:
 		if !tempspeed:
 			#won
@@ -80,19 +107,54 @@ func _physics_process(delta: float) -> void:
 			tempspeed = false
 			tempspeedup = 0
 	#correction
-	if self.get_rotation() < get_floor_normal()[0]:
-		self.rotate(0.02)
-	if self.get_rotation() > get_floor_normal()[0]: 
-		self.rotate(-0.02)
+	if self.get_rotation() < get_floor_normal()[0] and get_floor_normal()[0] != 0:
+		self.rotate(0.03)
+	if self.get_rotation() > get_floor_normal()[0] and get_floor_normal()[0] != 0: 
+		self.rotate(-0.03)
 	#rotation
 	self.rotate((rotate_velocity / 10) * delta)
 	
-	position.x += x_velocity * delta
-	if x_velocity > 2:
-		x_velocity -= x_drag * delta
-	if x_velocity < -2:
-		x_velocity += x_drag * delta
 	time_since_last_speedup += delta
+	
+	
+	
+	if get_floor_normal()[0] < current_floor_session_max_angle:
+		current_floor_session_max_angle = get_floor_normal()[0]
+	
+	if abs(get_floor_normal()[0]) < 0.1 and get_floor_normal()[0] != 0:
+		current_floor_session_max_angle = 0
+	
+	#ramp jump
+	if wasonfloor and !is_on_floor():
+		
+		
+		if (300 + Global.speedup) > 500 and current_floor_session_max_angle < -0.3:
+			#successful ramp
+			velocity.y -= 300 + Global.speedup
+			numjumpsleft = 0
+		#failure debug code
+		if current_floor_session_max_angle > -0.3:
+			printdbg("failed b: " + str(current_floor_session_max_angle))
+		if (300 + Global.speedup) < 500:
+			printdbg("failed a")
+		
+
+		was_time_since_check = was_check_rate + 1
+		current_floor_session_max_angle = 0
+	
+	
+	if was_time_since_check > was_check_rate:
+		wasonfloor = is_on_floor()
+		was_time_since_check = 0
+
+	
+	was_time_since_check += delta
+	
+	if is_on_floor():
+		time_on_floor += delta
+	else:
+		time_on_floor = 0
+	
 	move_and_slide()
 
 
@@ -100,13 +162,16 @@ func add_rotate_velocity(amount):
 	rotate_velocity += amount
 
 func dead():
-	get_tree().quit()
+	titlescreen()
 
 func _input(event):
-	if event.is_action_pressed("jump"):
-		velocity.y = 0 - JUMP_VELOCITY
 	if event.is_action_pressed("exit"):
-		get_tree().quit()
+		titlescreen()
+	
+	if event.is_action_pressed("jump") and canjump:
+		numjumpsleft -= 1
+		velocity.y = 0 - JUMP_VELOCITY
+
 	if event.is_action_pressed("jump"):
 		holding = true
 	if event.is_action_released("jump"):
@@ -120,19 +185,28 @@ func hitjump():
 	velocity.y = -600
 	
 func hitspin():
-	temporaryspeedup(10)
+	temporaryspeedup(50)
 	Global.score += 10
 	holding = false
 	rotate_velocity += 90
 	velocity.y = 0 - spin_add_velocity
+	
 func hitmove():
 	temporaryspeedup(300)
-	Global.speedup += 20
+	Global.speedup += 10
 func hitramp():
+	return
 	Global.score += 20
-	position.y -= 10
-	x_velocity += 350
-	velocity.y -= 250
+	Global.speedup += 20
+
+	position.y -= 20
+	temporaryspeedup(100)
+	
+	if 200 + Global.speedup / 2 > 500:
+		velocity.y -= 200 + Global.speedup / 2
+	else:
+		velocity.y -= 500
+	rotate_velocity += 100
 
 
 func _on_death_body_entered(body: Node2D) -> void:
@@ -151,3 +225,10 @@ func temporaryspeedup(amount):
 	Global.speedup += amount
 	tempspeedup += amount
 	tempspeed = true
+
+func titlescreen():
+	get_tree().quit()
+
+func printdbg(text: String):
+	if DEBUG:
+		print(text)

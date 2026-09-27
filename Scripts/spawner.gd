@@ -20,12 +20,12 @@ var ice4 = load("res://scenes/Ice/ice_4.tscn")
 var chance
 var lastice = 0
 
-#speedup ratio to normal
-#normal is 300
-# 300 + Globals.speedup / 300
+#extras spawn range
+var smallest = -100
+var largest = 150
 
 var sincelastspawn = 0
-var spawnintervalmovement = 590
+var spawninterval = 590
 
 var extrasincelastspawn = 0
 var extraspawninterval = 400
@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 	sincelastspawn += (300 + Global.speedup) * delta
 	extrasincelastspawn += (300 + Global.speedup) * delta
 	
-	if sincelastspawn > spawnintervalmovement:
+	if sincelastspawn > spawninterval:
 		spawnbase()
 		sincelastspawn = 0
 	if extrasincelastspawn > extraspawninterval:
@@ -45,17 +45,17 @@ func _process(delta: float) -> void:
 func spawnspin():
 	var instance = Spin.instantiate()
 	Extras.add_child(instance)
-	instance.position[1] = randi_range(150, 300)
+	instance.position[1] = randi_range(smallest, largest)
 
 func spawnmove():
 	var instance = Move.instantiate()
 	Extras.add_child(instance)
-	instance.position[1] = randi_range(50, 200)
+	instance.position[1] = randi_range(smallest, largest)
 
 func spawnjump():
 	var instance = Jumpup.instantiate()
 	Extras.add_child(instance)
-	instance.position[1] = randi_range(100, 300)
+	instance.position[1] = randi_range(smallest, largest)
 
 func spawnice1():
 	var instance = ice1.instantiate()

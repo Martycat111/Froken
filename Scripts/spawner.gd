@@ -1,48 +1,61 @@
 extends Node2D
 
-var Spin = load("res://scenes/Spin.tscn")
-var Move = load("res://scenes/Move.tscn")
-var Ice = load("res://scenes/Ice.tscn")
+
+
 @onready var Objects = get_node("../Objects")
 @onready var Player = get_node("../Player")
+@onready var Extras = get_node("../Extras")
+
+
+var Spin = load("res://scenes/spin.tscn")
+var Move = load("res://scenes/move.tscn")
+var Jumpup = load("res://scenes/jumpup.tscn")
+
 
 var ice1 = load("res://scenes/Ice/ice_1.tscn")
 var ice2 = load("res://scenes/Ice/ice_2.tscn")
 var ice3 = load("res://scenes/Ice/ice_3.tscn")
 var ice4 = load("res://scenes/Ice/ice_4.tscn")
 
-var timesincespawn = 0
-var spawninterval
 var chance
-
 var lastice = 0
 
 #speedup ratio to normal
 #normal is 300
 # 300 + Globals.speedup / 300
 
-var speedup_ratio = 1
+var sincelastspawn = 0
+var spawnintervalmovement = 590
+
+var extrasincelastspawn = 0
+var extraspawninterval = 400
+
 func _process(delta: float) -> void:
-	speedup_ratio = float((300 + Global.speedup)) / 300
-	timesincespawn += delta
-	spawninterval = 1.995 / float(speedup_ratio)
-	if timesincespawn > spawninterval:
-		spawn()
-		timesincespawn = 0
+	
+	sincelastspawn += (300 + Global.speedup) * delta
+	extrasincelastspawn += (300 + Global.speedup) * delta
+	
+	if sincelastspawn > spawnintervalmovement:
+		spawnbase()
+		sincelastspawn = 0
+	if extrasincelastspawn > extraspawninterval:
+		spawnextras()
+		extrasincelastspawn = 0
 
 func spawnspin():
 	var instance = Spin.instantiate()
-	Objects.add_child(instance)
+	Extras.add_child(instance)
+	instance.position[1] = randi_range(150, 300)
 
-func spawnmove(ypos = null):
+func spawnmove():
 	var instance = Move.instantiate()
-	Objects.add_child(instance)
-	if (ypos): instance.position.y = ypos
+	Extras.add_child(instance)
+	instance.position[1] = randi_range(50, 200)
 
-func spawnice(ypos = null):
-	var instance = Ice.instantiate()
-	Objects.add_child(instance)
-	if (ypos): instance.position.y = ypos
+func spawnjump():
+	var instance = Jumpup.instantiate()
+	Extras.add_child(instance)
+	instance.position[1] = randi_range(100, 300)
 
 func spawnice1():
 	var instance = ice1.instantiate()
@@ -59,17 +72,6 @@ func spawnice3():
 func spawnice4():
 	var instance = ice4.instantiate()
 	Objects.add_child(instance)
-
-
-func spawn():
-	spawnbase()
-	#var chance = randf()
-	#if chance > 0.5:
-	#	spawnmove()
-	#if chance < 0.3:
-	#	spawnspin()
-	#if chance < 0.5 and chance > 0.3:
-	#	spawnice()
 
 func rollchance():
 	chance = randf()
@@ -91,3 +93,13 @@ func spawnbase():
 			lastice = 3
 			spawnice3()
 		else: spawnice4()
+
+func spawnextras():
+	rollchance()
+	if chance > 0.7:
+		spawnmove()
+	elif chance < 0.3:
+		spawnspin()
+	elif chance < 0.5 and chance > 0.3:
+		spawnjump()
+	else: pass

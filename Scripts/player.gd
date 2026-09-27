@@ -1,10 +1,9 @@
 extends CharacterBody2D
 
 var spin_add_velocity = 400
-var time_since_hit_spin = 0
 
 var x_velocity = 0
-var x_drag = 150
+var x_drag = 200
 
 var rotate_amount = 5
 var rotate_velocity = 0
@@ -19,13 +18,16 @@ var hold_timeout = 0.5
 var hold_time = 0
 
 var time_since_last_speedup = 0
-var speedup = 0 #current speedup
 var speedup_frequency = 2
-var speedup_amount = 5 #speedup increment
+var speedup_amount = 10 #speedup increment
+
+var tempspeedup = 0 # current amount of temporary speedup
+var tempspeed = false #temporary speedup is active
+var tempspeedslowdown = 300 #amount to take off the temporary speedup (drag)
 
 # x = 1400 y = 800
 func _physics_process(delta: float) -> void:
-	# allways stay in same place
+	#always go to the same place
 	if position.x > 556.0: 
 		position.x -= 3
 	if position.x < 556.0:
@@ -34,6 +36,12 @@ func _physics_process(delta: float) -> void:
 	if abs(556 - position.x) < 5:
 		position.x = 556.0
 	
+	
+	if tempspeed:
+		tempspeedup -= tempspeedslowdown * delta
+		Global.speedup -= tempspeedslowdown * delta
+	if abs(tempspeedup) < 10:
+		tempspeed = false
 	
 	if holding:
 		velocity.y -= hold_velocity
@@ -60,16 +68,22 @@ func _physics_process(delta: float) -> void:
 	if holding: hold_time += delta
 	#speedup
 	if time_since_last_speedup > speedup_frequency: 
-		speedup += speedup_amount
+		Global.speedup += speedup_amount
 		time_since_last_speedup = 0
-
-	 
+		print(Global.speedup)
+	if Global.speedup > 2000:
+		if !tempspeed:
+			#won
+			print("congradulations you have won capatilizism")
+		else:
+			Global.speedup -= tempspeedup
+			tempspeed = false
+			tempspeedup = 0
 	#correction
-	if self.get_rotation() < 0:
+	if self.get_rotation() < get_floor_normal()[0]:
 		self.rotate(0.02)
-	if self.get_rotation() > 0: 
+	if self.get_rotation() > get_floor_normal()[0]: 
 		self.rotate(-0.02)
-		
 	#rotation
 	self.rotate((rotate_velocity / 10) * delta)
 	
@@ -78,13 +92,9 @@ func _physics_process(delta: float) -> void:
 		x_velocity -= x_drag * delta
 	if x_velocity < -2:
 		x_velocity += x_drag * delta
-	time_since_hit_spin += delta
 	time_since_last_speedup += delta
-	var collision = move_and_collide(velocity * delta)
-	if collision:
-		if collision.get_collider().name == "Ice":
-			velocity.y += velocity.x
-			#velocity.y = 0
+	move_and_slide()
+
 
 func add_rotate_velocity(amount):
 	rotate_velocity += amount
@@ -104,16 +114,25 @@ func _input(event):
 		hold_time = 0
 
 
+func hitjump():
+	Global.score += 30
+	x_velocity = 300
+	velocity.y = -600
+	
 func hitspin():
-	if time_since_hit_spin > 0.1:
-		Global.score += 10
-		time_since_hit_spin = 0
-		holding = false
-		rotate_velocity += 90
-		velocity.y = 0 - spin_add_velocity
-
+	temporaryspeedup(10)
+	Global.score += 10
+	holding = false
+	rotate_velocity += 90
+	velocity.y = 0 - spin_add_velocity
 func hitmove():
-	x_velocity += 500
+	temporaryspeedup(300)
+	Global.speedup += 20
+func hitramp():
+	Global.score += 20
+	position.y -= 10
+	x_velocity += 350
+	velocity.y -= 250
 
 
 func _on_death_body_entered(body: Node2D) -> void:
@@ -125,3 +144,10 @@ func _on_move_back_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		x_velocity = -500
 		velocity.y = 200
+
+func temporaryspeedup(amount):
+	if tempspeedup > 1000:
+		return
+	Global.speedup += amount
+	tempspeedup += amount
+	tempspeed = true

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dcekrisb5fxlh"]
+
+[ext_resource type="Texture2D" uid="uid://l0x6ulmw2r32" path="res://Images/spin.png" id="1_xq8hm"]
+[ext_resource type="Script" uid="uid://dpmujxfhkgur2" path="res://Scripts/hitspin.gd" id="2_xq8hm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2b7dg"]
+radius = 234.0
+
+[node name="Spin" type="Sprite2D" unique_id=462369616]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_xq8hm")
+script = ExtResource("2_xq8hm")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=785313090]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1098497414]
+shape = SubResource("CircleShape2D_2b7dg")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

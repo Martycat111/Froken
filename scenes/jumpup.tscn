@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://brceeim1snuqg"]
+
+[ext_resource type="Texture2D" uid="uid://l1wn7v2o2375" path="res://Images/jumpup.png" id="1_xb2xj"]
+[ext_resource type="Script" uid="uid://dbyn7wqlu2e7b" path="res://Scripts/jumpup.gd" id="2_xb2xj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2b7dg"]
+radius = 204.34782
+
+[node name="Spin" type="Sprite2D" unique_id=462369616]
+scale = Vector2(0.23, 0.23)
+texture = ExtResource("1_xb2xj")
+script = ExtResource("2_xb2xj")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=785313090]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1098497414]
+shape = SubResource("CircleShape2D_2b7dg")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

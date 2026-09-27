@@ -15,6 +15,9 @@ height = 573.3333
 radius = 68.614685
 height = 787.15
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_2b7dg"]
+radius = 27.073973
+
 [node name="Ice" type="RigidBody2D" unique_id=1220415166]
 mass = 1000.0
 lock_rotation = true
@@ -47,5 +50,13 @@ position = Vector2(-670, 543.3333)
 rotation = 2.268928
 shape = SubResource("CapsuleShape2D_deeij")
 
+[node name="Spin" type="Area2D" parent="." unique_id=2144984209]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spin" unique_id=973522890]
+position = Vector2(277, 92)
+shape = SubResource("CircleShape2D_2b7dg")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="body_entered" from="Is on ice" to="." method="_on_is_on_ice_body_entered"]
+[connection signal="body_entered" from="Spin" to="." method="_on_spin_body_entered"]

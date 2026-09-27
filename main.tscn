@@ -104,6 +104,9 @@ script = ExtResource("3_h2yge")
 [node name="Objects" type="Node2D" parent="." unique_id=374210569]
 position = Vector2(2000, 600)
 
+[node name="Extras" type="Node2D" parent="." unique_id=1737104586]
+position = Vector2(2000, 280)
+
 [node name="Score" type="RichTextLabel" parent="." unique_id=173531682]
 offset_left = -375.0
 offset_top = -216.0

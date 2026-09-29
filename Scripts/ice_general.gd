@@ -23,8 +23,3 @@ func _on_body_entered(_body: Node) -> void:
 
 func _on_body_exited(_body: Node) -> void:
 	Global.speedup -= 30
-
-
-func _on_spin_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
-		Player.hitramp()

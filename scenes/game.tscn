@@ -58,7 +58,7 @@ _data = {
 &"RESET": SubResource("Animation_lquwl")
 }
 
-[node name="Node2D" type="Node2D" unique_id=583196749]
+[node name="Game" type="Node2D" unique_id=583196749]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=640239660]
 offset = Vector2(575, 323)

@@ -1,0 +1,166 @@
+[gd_scene format=3 uid="uid://pyfio6rmequn"]
+
+[ext_resource type="Script" uid="uid://c5vp7xd7j3cou" path="res://Scripts/titlescreen.gd" id="1_bxdlt"]
+[ext_resource type="Texture2D" uid="uid://svk6b55a2lhs" path="res://Images/Titlescreen/Sign.png" id="1_r0gry"]
+[ext_resource type="Texture2D" uid="uid://db2sphstfps02" path="res://Images/Titlescreen/back.png" id="2_8wacg"]
+[ext_resource type="Texture2D" uid="uid://mdxlp4qp6y1p" path="res://Images/Titlescreen/Play.png" id="4_2ptb1"]
+[ext_resource type="Texture2D" uid="uid://bgmtipttwi85c" path="res://Images/Titlescreen/Play_Pressed.png" id="5_mk4jl"]
+[ext_resource type="Texture2D" uid="uid://ykbvda4wpm82" path="res://Images/Titlescreen/Background.png" id="5_xxkhp"]
+[ext_resource type="Texture2D" uid="uid://bmwxut2ojh2yt" path="res://Images/Titlescreen/Settings.png" id="6_5u5ic"]
+[ext_resource type="Script" uid="uid://dvodxnucuam4" path="res://Scripts/settings.gd" id="7_ly5u4"]
+[ext_resource type="Texture2D" uid="uid://dglw1uultf1sd" path="res://Images/Titlescreen/tint.png" id="9_bch4e"]
+[ext_resource type="Texture2D" uid="uid://cou8a6b1ognd0" path="res://Images/Titlescreen/settingsmenubg.png" id="9_ncdcj"]
+[ext_resource type="Texture2D" uid="uid://dtmjd6l7ov18g" path="res://Images/Titlescreen/Backbutton.png" id="10_gn1eu"]
+
+[sub_resource type="Animation" id="Animation_bxdlt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sign:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(226.99998, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Back:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(220, 320)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sign:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8wacg"]
+resource_name = "load"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sign:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.4506257, 2.5491211),
+"update": 0,
+"values": [Vector2(220, 0), Vector2(178, 150)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Back:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.45062512, 4.141059),
+"update": 0,
+"values": [Vector2(-170, 320), Vector2(160, 320)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sign:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.001, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.05235988]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2ptb1"]
+_data = {
+&"RESET": SubResource("Animation_bxdlt"),
+&"load": SubResource("Animation_8wacg")
+}
+
+[node name="Title" type="Node2D" unique_id=1432001020]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=210926820]
+libraries/ = SubResource("AnimationLibrary_2ptb1")
+script = ExtResource("1_bxdlt")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=2045339398]
+position = Vector2(580, 324)
+texture = ExtResource("5_xxkhp")
+
+[node name="Back" type="Sprite2D" parent="." unique_id=1320729151]
+position = Vector2(220, 320)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("2_8wacg")
+
+[node name="PlayButton" type="TextureButton" parent="Back" unique_id=2051887275]
+offset_left = -575.0
+offset_top = -300.0
+offset_right = 1425.0
+offset_bottom = 700.0
+scale = Vector2(0.6, 0.6)
+texture_normal = ExtResource("4_2ptb1")
+texture_pressed = ExtResource("5_mk4jl")
+metadata/_edit_use_anchors_ = true
+
+[node name="Settings" type="Button" parent="Back" unique_id=27783422]
+offset_left = -575.0
+offset_top = 300.0
+offset_right = 1433.0
+offset_bottom = 1308.0
+scale = Vector2(0.6, 0.6)
+icon = ExtResource("6_5u5ic")
+flat = true
+script = ExtResource("7_ly5u4")
+
+[node name="Sign" type="Sprite2D" parent="." unique_id=1235616877]
+position = Vector2(226.99998, 0)
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("1_r0gry")
+
+[node name="Settingsmenu" type="Node2D" parent="." unique_id=1237877832]
+visible = false
+position = Vector2(93.5, 385.9999)
+scale = Vector2(0.13199995, 0.13199995)
+
+[node name="Tint" type="Sprite2D" parent="Settingsmenu" unique_id=1349866127]
+position = Vector2(3647.7285, -526.51465)
+scale = Vector2(443.18198, 247.34859)
+texture = ExtResource("9_bch4e")
+
+[node name="Background" type="Sprite2D" parent="Settingsmenu" unique_id=1329920359]
+position = Vector2(3704.5454, -549.2427)
+scale = Vector2(2, 2)
+texture = ExtResource("9_ncdcj")
+
+[node name="BackButton" type="Button" parent="Settingsmenu" unique_id=382211410]
+offset_left = 1806.0
+offset_top = -2439.0
+offset_right = 2314.0
+offset_bottom = -1931.0
+scale = Vector2(0.6, 0.6)
+icon = ExtResource("10_gn1eu")
+flat = true
+
+[connection signal="pressed" from="Back/PlayButton" to="AnimationPlayer" method="_on_play_button_pressed"]
+[connection signal="pressed" from="Back/Settings" to="Back/Settings" method="_on_pressed"]
+[connection signal="pressed" from="Settingsmenu/BackButton" to="Back/Settings" method="_on_back_button_pressed"]

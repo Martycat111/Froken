@@ -19,6 +19,7 @@ var ice4 = load("res://scenes/Ice/ice_4.tscn")
 
 var chance
 var lastice = 0
+var lastextra = 0
 
 #extras spawn range
 var smallest = -100
@@ -97,9 +98,12 @@ func spawnbase():
 func spawnextras():
 	rollchance()
 	if chance > 0.7:
+		lastextra = 1
 		spawnmove()
 	elif chance < 0.3:
+		lastextra = 2
 		spawnspin()
 	elif chance < 0.5 and chance > 0.3:
+		lastextra = 3
 		spawnjump()
 	else: pass

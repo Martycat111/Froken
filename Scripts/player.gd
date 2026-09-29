@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var titlescene = load("res://scenes/Titlescreen.tscn")
+
 var spin_add_velocity = 400
 
 var x_velocity = 0
@@ -23,7 +25,7 @@ var speedup_amount = 10 #speedup increment
 
 var tempspeedup = 0 # current amount of temporary speedup
 var tempspeed = false #temporary speedup is active
-var tempspeedslowdown = 3000 #amount to take off the temporary speedup (drag)
+var tempspeedslowdown = 200 #amount to take off the temporary speedup (drag)
 
 #jumps left
 var floorjumpamount = 3 #number of jumps when on floor
@@ -32,12 +34,14 @@ var canjump = true
 
 #was on floor
 var wasonfloor = false
-var was_check_rate = 0.5 #check every _ seconds
+var was_check_rate = 0.1 #check every _ seconds
 var was_time_since_check = 0 
 
 var time_on_floor = 0
 var current_floor_session_max_angle = 0
 
+var ramp_jump_threshold = 0
+var ramp_jump_angle_threshold = -0.5
 
 var DEBUG = true
 
@@ -87,8 +91,8 @@ func _physics_process(delta: float) -> void:
 		rotate_velocity = rotate_terminal_velocity
 	
 	#rotate with speed
-	if 300 + Global.speedup > 350:
-		rotate_velocity += (300 + Global.speedup) / 500
+	if (300 + Global.speedup) > 400:
+		rotate_velocity += (300 + Global.speedup) / 600
 	
 	#gravity
 	velocity += get_gravity() * delta
@@ -117,31 +121,36 @@ func _physics_process(delta: float) -> void:
 	time_since_last_speedup += delta
 	
 	
-	
-	if get_floor_normal()[0] < current_floor_session_max_angle:
+	#   check if bigger than current_floor_session_max_angle   and    that its a big enough difference to matter
+	if get_floor_normal()[0] < current_floor_session_max_angle and abs(get_floor_normal()[0]) - abs(current_floor_session_max_angle) > 0.05:
 		current_floor_session_max_angle = get_floor_normal()[0]
+		printdbg("updated max: " + str(current_floor_session_max_angle))
 	
-	if abs(get_floor_normal()[0]) < 0.1 and get_floor_normal()[0] != 0:
-		current_floor_session_max_angle = 0
-	
+
+
 	#ramp jump
 	if wasonfloor and !is_on_floor():
+		#was on floor now is not
 		
-		
-		if (300 + Global.speedup) > 500 and current_floor_session_max_angle < -0.3:
+		# speed check                                   and      floor angle was big enough                             and (self explanatory) sec
+		if (300 + Global.speedup) > ramp_jump_threshold and current_floor_session_max_angle < ramp_jump_angle_threshold and time_on_floor > 0.2:
 			#successful ramp
-			velocity.y -= 300 + Global.speedup
-			numjumpsleft = 0
-		#failure debug code
-		if current_floor_session_max_angle > -0.3:
-			printdbg("failed b: " + str(current_floor_session_max_angle))
-		if (300 + Global.speedup) < 500:
+			rampjump()
+			
+		#failure code
+		if current_floor_session_max_angle > ramp_jump_angle_threshold:
+			printdbg("failed b: " + str(current_floor_session_max_angle) + " > " + str(ramp_jump_angle_threshold))
+			
+		if 300 + Global.speedup < ramp_jump_threshold:
 			printdbg("failed a")
 		
-
 		was_time_since_check = was_check_rate + 1
 		current_floor_session_max_angle = 0
-	
+		
+	#if too close to 0 angle, reset it.
+	if abs(get_floor_normal()[0]) < 0.1 and is_on_floor():
+		printdbg("resetti spagerit")
+		#current_floor_session_max_angle = 0
 	
 	if was_time_since_check > was_check_rate:
 		wasonfloor = is_on_floor()
@@ -190,23 +199,12 @@ func hitspin():
 	holding = false
 	rotate_velocity += 90
 	velocity.y = 0 - spin_add_velocity
+	numjumpsleft += 1
+	canjump = true
 	
 func hitmove():
-	temporaryspeedup(300)
+	temporaryspeedup(200)
 	Global.speedup += 10
-func hitramp():
-	return
-	Global.score += 20
-	Global.speedup += 20
-
-	position.y -= 20
-	temporaryspeedup(100)
-	
-	if 200 + Global.speedup / 2 > 500:
-		velocity.y -= 200 + Global.speedup / 2
-	else:
-		velocity.y -= 500
-	rotate_velocity += 100
 
 
 func _on_death_body_entered(body: Node2D) -> void:
@@ -227,8 +225,16 @@ func temporaryspeedup(amount):
 	tempspeed = true
 
 func titlescreen():
-	get_tree().quit()
+	var amogus = titlescene.instantiate()
+	get_tree().root.add_child(amogus) #add the titlescreen to the scene tree
+	print(get_tree().root.get_node("Title"))
+	get_tree().root.get_node("Game").free() #remove the game
 
 func printdbg(text: String):
 	if DEBUG:
 		print(text)
+
+func rampjump():
+	velocity.y -= Global.speedup
+	numjumpsleft = 0
+	printdbg("Ramp jump")

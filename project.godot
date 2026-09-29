@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="froken"
-run/main_scene="uid://debs7qr57rnms"
+run/main_scene="uid://pyfio6rmequn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

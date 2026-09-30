@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dbyn7wqlu2e7b" path="res://Scripts/jumpup.gd" id="2_xb2xj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2b7dg"]
-radius = 204.34782
+radius = 257.1106
 
 [node name="Spin" type="Sprite2D" unique_id=462369616]
 scale = Vector2(0.23, 0.23)

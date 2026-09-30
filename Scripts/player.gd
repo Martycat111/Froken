@@ -25,7 +25,7 @@ var speedup_amount = 10 #speedup increment
 
 var tempspeedup = 0 # current amount of temporary speedup
 var tempspeed = false #temporary speedup is active
-var tempspeedslowdown = 200 #amount to take off the temporary speedup (drag)
+var tempspeedslowdown = 250 #amount to take off the temporary speedup (drag)
 
 #jumps left
 var floorjumpamount = 3 #number of jumps when on floor
@@ -43,7 +43,8 @@ var current_floor_session_max_angle = 0
 var ramp_jump_threshold = 0
 var ramp_jump_angle_threshold = -0.5
 
-var DEBUG = true
+var DEBUG = Global.DEBUG
+
 
 func _physics_process(delta: float) -> void:
 	#jump count and stop
@@ -147,14 +148,17 @@ func _physics_process(delta: float) -> void:
 		was_time_since_check = was_check_rate + 1
 		current_floor_session_max_angle = 0
 		
-	#if too close to 0 angle, reset it.
-	if abs(get_floor_normal()[0]) < 0.1 and is_on_floor():
-		printdbg("resetti spagerit")
-		#current_floor_session_max_angle = 0
+
+
 	
 	if was_time_since_check > was_check_rate:
 		wasonfloor = is_on_floor()
 		was_time_since_check = 0
+		
+		#if too close to 0 angle, reset it.
+		if abs(get_floor_normal()[0]) < 0.1 and is_on_floor() and current_floor_session_max_angle != 0:
+			printdbg("resetti spageriti")
+			current_floor_session_max_angle = 0
 
 	
 	was_time_since_check += delta
@@ -204,7 +208,7 @@ func hitspin():
 	
 func hitmove():
 	temporaryspeedup(200)
-	Global.speedup += 10
+	Global.speedup += 5
 
 
 func _on_death_body_entered(body: Node2D) -> void:
@@ -225,10 +229,11 @@ func temporaryspeedup(amount):
 	tempspeed = true
 
 func titlescreen():
-	var amogus = titlescene.instantiate()
-	get_tree().root.add_child(amogus) #add the titlescreen to the scene tree
-	print(get_tree().root.get_node("Title"))
-	get_tree().root.get_node("Game").free() #remove the game
+	Global.score = 0
+	Global.speedup = 0
+	var title = titlescene.instantiate()
+	get_tree().root.add_child(title) #add the titlescreen to the scene tree
+	get_tree().root.get_node("Game").queue_free() #remove the game
 
 func printdbg(text: String):
 	if DEBUG:
@@ -236,5 +241,7 @@ func printdbg(text: String):
 
 func rampjump():
 	velocity.y -= Global.speedup
-	numjumpsleft = 0
 	printdbg("Ramp jump")
+
+func _exit_tree() -> void:
+	printdbg("Player removed from tree")

@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*uid://cwa0wy3wgcag2"
+SaveSystem="*uid://37wxllh4iyrb"
 
 [display]
 
@@ -26,7 +27,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg", "res://addons/save_system/plugin.cfg", "res://addons/thoth/plugin.cfg")
 
 [input]
 

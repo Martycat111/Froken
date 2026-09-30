@@ -4,10 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://svk6b55a2lhs" path="res://Images/Titlescreen/Sign.png" id="1_r0gry"]
 [ext_resource type="Texture2D" uid="uid://db2sphstfps02" path="res://Images/Titlescreen/back.png" id="2_8wacg"]
 [ext_resource type="Texture2D" uid="uid://mdxlp4qp6y1p" path="res://Images/Titlescreen/Play.png" id="4_2ptb1"]
-[ext_resource type="Texture2D" uid="uid://bgmtipttwi85c" path="res://Images/Titlescreen/Play_Pressed.png" id="5_mk4jl"]
 [ext_resource type="Texture2D" uid="uid://ykbvda4wpm82" path="res://Images/Titlescreen/Background.png" id="5_xxkhp"]
 [ext_resource type="Texture2D" uid="uid://bmwxut2ojh2yt" path="res://Images/Titlescreen/Settings.png" id="6_5u5ic"]
 [ext_resource type="Script" uid="uid://dvodxnucuam4" path="res://Scripts/settings.gd" id="7_ly5u4"]
+[ext_resource type="Texture2D" uid="uid://bb3el2w8a1yf8" path="res://Images/Titlescreen/exit.png" id="8_mq2qu"]
 [ext_resource type="Texture2D" uid="uid://dglw1uultf1sd" path="res://Images/Titlescreen/tint.png" id="9_bch4e"]
 [ext_resource type="Texture2D" uid="uid://cou8a6b1ognd0" path="res://Images/Titlescreen/settingsmenubg.png" id="9_ncdcj"]
 [ext_resource type="Texture2D" uid="uid://dtmjd6l7ov18g" path="res://Images/Titlescreen/Backbutton.png" id="10_gn1eu"]
@@ -29,7 +29,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Back:position")
+tracks/1/path = NodePath("Banner:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -50,6 +50,34 @@ tracks/2/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasModulate:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mq2qu"]
+resource_name = "fadeout"
+length = 0.19999999999999998
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasModulate:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_8wacg"]
 resource_name = "load"
@@ -69,7 +97,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Back:position")
+tracks/1/path = NodePath("Banner:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -88,12 +116,13 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0.001, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.0, 0.05235988]
+"values": [0.0, 0.017453292]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2ptb1"]
 _data = {
 &"RESET": SubResource("Animation_bxdlt"),
+&"fadeout": SubResource("Animation_mq2qu"),
 &"load": SubResource("Animation_8wacg")
 }
 
@@ -103,26 +132,25 @@ _data = {
 libraries/ = SubResource("AnimationLibrary_2ptb1")
 script = ExtResource("1_bxdlt")
 
-[node name="Background" type="Sprite2D" parent="." unique_id=2045339398]
+[node name="Gameplay" type="Sprite2D" parent="." unique_id=2045339398]
 position = Vector2(580, 324)
 texture = ExtResource("5_xxkhp")
 
-[node name="Back" type="Sprite2D" parent="." unique_id=1320729151]
+[node name="Banner" type="Sprite2D" parent="." unique_id=1320729151]
 position = Vector2(220, 320)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("2_8wacg")
 
-[node name="PlayButton" type="TextureButton" parent="Back" unique_id=2051887275]
+[node name="PlayButton" type="Button" parent="Banner" unique_id=749028104]
 offset_left = -575.0
 offset_top = -300.0
-offset_right = 1425.0
-offset_bottom = 700.0
+offset_right = 1433.0
+offset_bottom = 708.0
 scale = Vector2(0.6, 0.6)
-texture_normal = ExtResource("4_2ptb1")
-texture_pressed = ExtResource("5_mk4jl")
-metadata/_edit_use_anchors_ = true
+icon = ExtResource("4_2ptb1")
+flat = true
 
-[node name="Settings" type="Button" parent="Back" unique_id=27783422]
+[node name="Settings" type="Button" parent="Banner" unique_id=27783422]
 offset_left = -575.0
 offset_top = 300.0
 offset_right = 1433.0
@@ -131,6 +159,15 @@ scale = Vector2(0.6, 0.6)
 icon = ExtResource("6_5u5ic")
 flat = true
 script = ExtResource("7_ly5u4")
+
+[node name="Back" type="Button" parent="Banner" unique_id=1858004018]
+offset_left = -575.0
+offset_top = 900.0
+offset_right = 1433.0
+offset_bottom = 1908.0
+scale = Vector2(0.6, 0.6)
+icon = ExtResource("8_mq2qu")
+flat = true
 
 [node name="Sign" type="Sprite2D" parent="." unique_id=1235616877]
 position = Vector2(226.99998, 0)
@@ -143,8 +180,8 @@ position = Vector2(93.5, 385.9999)
 scale = Vector2(0.13199995, 0.13199995)
 
 [node name="Tint" type="Sprite2D" parent="Settingsmenu" unique_id=1349866127]
-position = Vector2(3647.7285, -526.51465)
-scale = Vector2(443.18198, 247.34859)
+position = Vector2(4200, 0)
+scale = Vector2(993.779, 520)
 texture = ExtResource("9_bch4e")
 
 [node name="Background" type="Sprite2D" parent="Settingsmenu" unique_id=1329920359]
@@ -161,6 +198,94 @@ scale = Vector2(0.6, 0.6)
 icon = ExtResource("10_gn1eu")
 flat = true
 
-[connection signal="pressed" from="Back/PlayButton" to="AnimationPlayer" method="_on_play_button_pressed"]
-[connection signal="pressed" from="Back/Settings" to="Back/Settings" method="_on_pressed"]
-[connection signal="pressed" from="Settingsmenu/BackButton" to="Back/Settings" method="_on_back_button_pressed"]
+[node name="FPS" type="OptionButton" parent="Settingsmenu" unique_id=1322220265]
+offset_left = 3150.0
+offset_top = -1700.0
+offset_right = 3310.0
+offset_bottom = -1635.0
+scale = Vector2(7, 7)
+tooltip_text = "LABEL"
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 37
+item_count = 2
+popup/item_0/text = "60"
+popup/item_0/id = 0
+popup/item_1/text = "30"
+popup/item_1/id = 1
+
+[node name="Label" type="Label" parent="Settingsmenu/FPS" unique_id=2005672971]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 6.5
+offset_right = 118.0
+offset_bottom = 57.5
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 37
+text = "FPS"
+
+[node name="Windowed" type="CheckButton" parent="Settingsmenu" unique_id=944862477]
+offset_left = 4041.668
+offset_top = -1100.0
+offset_right = 4085.668
+offset_bottom = -1076.0
+scale = Vector2(12, 12)
+
+[node name="Label" type="Label" parent="Settingsmenu/Windowed" unique_id=67177111]
+layout_mode = 0
+offset_left = -102.90407
+offset_top = -3.7878704
+offset_right = 6.095932
+offset_bottom = 27.21213
+theme_override_font_sizes/font_size = 20
+text = "Windowed"
+
+[node name="Showfps" type="CheckButton" parent="Settingsmenu" unique_id=1146913413]
+offset_left = 4041.668
+offset_top = -700.0
+offset_right = 4085.668
+offset_bottom = -676.0
+scale = Vector2(12, 12)
+
+[node name="Label" type="Label" parent="Settingsmenu/Showfps" unique_id=940075097]
+layout_mode = 0
+offset_left = -102.90407
+offset_top = -3.7878704
+offset_right = 6.095932
+offset_bottom = 27.21213
+theme_override_font_sizes/font_size = 20
+text = "Show fps"
+
+[node name="Resolution" type="OptionButton" parent="Settingsmenu" unique_id=218939639]
+offset_left = 3000.0
+offset_right = 3200.0
+offset_bottom = 65.0
+scale = Vector2(7, 7)
+theme_override_font_sizes/font_size = 30
+
+[node name="Label" type="Label" parent="Settingsmenu/Resolution" unique_id=1055383426]
+layout_mode = 0
+offset_left = 10.0
+offset_top = -50.0
+offset_right = 189.0
+offset_bottom = -4.0
+theme_override_font_sizes/font_size = 33
+text = "Resolution:"
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=494541592]
+
+[connection signal="pressed" from="Banner/PlayButton" to="AnimationPlayer" method="_on_play_button_pressed"]
+[connection signal="pressed" from="Banner/Settings" to="Banner/Settings" method="_on_pressed"]
+[connection signal="pressed" from="Banner/Back" to="Banner/Settings" method="exit_game"]
+[connection signal="pressed" from="Settingsmenu/BackButton" to="Banner/Settings" method="_on_back_button_pressed"]
+[connection signal="item_selected" from="Settingsmenu/FPS" to="Banner/Settings" method="_on_fps_item_selected"]
+[connection signal="pressed" from="Settingsmenu/Windowed" to="Banner/Settings" method="_on_windowed_pressed"]
+[connection signal="pressed" from="Settingsmenu/Showfps" to="Banner/Settings" method="_on_show_fps_pressed"]
+[connection signal="item_selected" from="Settingsmenu/Resolution" to="Banner/Settings" method="_on_resolution_selected"]

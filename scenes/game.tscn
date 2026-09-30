@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://debs7qr57rnms"]
 
 [ext_resource type="Script" uid="uid://bacqxumgdixvs" path="res://Scripts/player.gd" id="1_1bvp3"]
+[ext_resource type="Script" uid="uid://b782mnlxdie7c" path="res://Scripts/fpscount.gd" id="1_iywne"]
 [ext_resource type="Script" uid="uid://dluo04qt6etro" path="res://Scripts/spawner.gd" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://bn6cpuux0f4k2" path="res://Scripts/score.gd" id="4_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://cw1wbxttywpdc" path="res://Images/bir.png" id="4_lquwl"]
@@ -64,6 +65,15 @@ _data = {
 offset = Vector2(575, 323)
 zoom = Vector2(0.6, 0.6)
 
+[node name="Fpscount" type="Label" parent="Camera2D" unique_id=149582745]
+offset_left = 1390.0
+offset_top = -208.0
+offset_right = 1482.0
+offset_bottom = -166.0
+theme_override_font_sizes/font_size = 30
+text = "FPS: 0 "
+script = ExtResource("1_iywne")
+
 [node name="Player" type="CharacterBody2D" parent="." unique_id=2088081453]
 position = Vector2(556, 328)
 scale = Vector2(0.50666666, 0.50666666)
@@ -102,7 +112,7 @@ shape = SubResource("RectangleShape2D_h2yge")
 script = ExtResource("3_h2yge")
 
 [node name="Objects" type="Node2D" parent="." unique_id=374210569]
-position = Vector2(2000, 600)
+position = Vector2(2000, 550)
 
 [node name="Extras" type="Node2D" parent="." unique_id=1737104586]
 position = Vector2(2000, 280)

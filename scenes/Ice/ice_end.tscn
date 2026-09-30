@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://bhvk4dp3k3d2d"]
+
+[ext_resource type="Script" uid="uid://mom38vqfooqp" path="res://Scripts/ice_general.gd" id="1_pj1o1"]
+[ext_resource type="Texture2D" uid="uid://b8ysvfjlfj8hb" path="res://Images/Ice/endcap.png" id="2_pj1o1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2b7dg"]
+radius = 65.741455
+height = 453.07678
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1tyn0"]
+radius = 62.657776
+height = 473.8767
+
+[node name="Ice" type="RigidBody2D" unique_id=1220415166]
+mass = 1000.0
+lock_rotation = true
+freeze = true
+script = ExtResource("1_pj1o1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=973644324]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_pj1o1")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1241613232]
+scale = Vector2(0.3, 0.3)
+polygon = PackedVector2Array(-996.6666, 340, -900, 383.3333, -830, 423.3333, -786.6666, 463.3333, -726.6666, 520, -670, 586.6666, -630, 653.3333, -590, 733.3333, -566.6666, 820, -550, 900, -533.3333, 1000, -1003.3333, 1000)
+
+[node name="Is on ice" type="Area2D" parent="." unique_id=506361278]
+scale = Vector2(0.3, 0.3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Is on ice" unique_id=564513318]
+position = Vector2(-773.33325, 390.0001)
+rotation = -1.0471976
+shape = SubResource("CapsuleShape2D_2b7dg")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Is on ice" unique_id=1107664308]
+position = Vector2(-503.33334, 763.33325)
+rotation = -0.34906584
+shape = SubResource("CapsuleShape2D_1tyn0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="body_entered" from="Is on ice" to="." method="_on_is_on_ice_body_entered"]

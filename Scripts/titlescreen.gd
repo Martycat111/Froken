@@ -9,5 +9,7 @@ func _ready() -> void:
 
 
 func _on_play_button_pressed() -> void:
+	self.play("fadeout")
+	await self.animation_finished
 	get_tree().root.add_child(gamescene) #add the game scene to the tree
-	get_tree().root.get_node("Title").free() #remove the titlescreen
+	get_tree().root.get_node("Title").queue_free() #remove the titlescreen

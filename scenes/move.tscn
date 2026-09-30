@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://csceme2rwdwjr" path="res://Scripts/hitmove.gd" id="2_fgflj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2b7dg"]
-radius = 234.0
+radius = 314.99997
 
 [node name="Move" type="Sprite2D" unique_id=462369616]
 scale = Vector2(0.2, 0.2)

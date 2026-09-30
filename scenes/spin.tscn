@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dpmujxfhkgur2" path="res://Scripts/hitspin.gd" id="2_xq8hm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2b7dg"]
-radius = 234.0
+radius = 304.99997
 
 [node name="Spin" type="Sprite2D" unique_id=462369616]
 scale = Vector2(0.2, 0.2)

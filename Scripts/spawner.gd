@@ -16,6 +16,10 @@ var ice1 = load("res://scenes/Ice/ice_1.tscn")
 var ice2 = load("res://scenes/Ice/ice_2.tscn")
 var ice3 = load("res://scenes/Ice/ice_3.tscn")
 var ice4 = load("res://scenes/Ice/ice_4.tscn")
+var ice_start = load("res://scenes/Ice/ice_start.tscn")
+var ice_end = load("res://scenes/Ice/ice_end.tscn")
+
+
 
 var chance
 var lastice = 0
@@ -58,6 +62,14 @@ func spawnjump():
 	Extras.add_child(instance)
 	instance.position[1] = randi_range(smallest, largest)
 
+func spawnicestart():
+	var instance = ice_start.instantiate()
+	Objects.add_child(instance)
+
+func spawniceend():
+	var instance = ice_end.instantiate()
+	Objects.add_child(instance)
+
 func spawnice1():
 	var instance = ice1.instantiate()
 	Objects.add_child(instance)
@@ -77,7 +89,43 @@ func spawnice4():
 func rollchance():
 	chance = randf()
 
+
+
+var current_isle_length = 0
+var time_since_isle = 4 #current time since isle. set to 4 to trigger straight away on run
+var time_between_isles = 4
+var isle_in_prog = false
+
 func spawnbase():
+	
+	if time_since_isle == time_between_isles and !isle_in_prog or time_since_isle > 5:
+		#start_isle
+		printdbg("Start isle")
+		spawnicestart()
+		isle_in_prog = true
+		time_since_isle = 0
+		return
+	
+	rollchance()
+	
+	if chance < 0.10 * current_isle_length or current_isle_length > 15:
+		#end isle
+		printdbg("Spawn end piece")
+		spawniceend()
+		isle_in_prog = false
+	
+	if isle_in_prog:
+		#add a part to isle
+		printdbg("Add a part to isle")
+		current_isle_length += 1
+		spawn_isle_part()
+	
+	if !isle_in_prog:
+		current_isle_length = 0
+		if chance > 0.6: time_between_isles += randi_range(0, 2)
+		time_since_isle += 1
+	
+func spawn_isle_part():
 	rollchance()
 	if chance > 0.33 and chance < 0.66:
 		if lastice != 1:
@@ -95,6 +143,8 @@ func spawnbase():
 			spawnice3()
 		else: spawnice4()
 
+
+
 func spawnextras():
 	rollchance()
 	if chance > 0.7:
@@ -107,3 +157,7 @@ func spawnextras():
 		lastextra = 3
 		spawnjump()
 	else: pass
+
+func printdbg(text: String):
+	if Global.DEBUG:
+		print(text)

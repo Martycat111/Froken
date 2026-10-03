@@ -2,8 +2,10 @@ extends Node
 
 #global vars
 
-var speedup = 0
+var jumpsleft = 4
+var speedup = 60
 var score = 0
+var tempspeedupamount = 0
 
 var showFPS = false
 var DEBUG = true

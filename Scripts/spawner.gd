@@ -5,7 +5,7 @@ extends Node2D
 @onready var Objects = get_node("../Objects")
 @onready var Player = get_node("../Player")
 @onready var Extras = get_node("../Extras")
-
+@onready var Water = get_node("../Water")
 
 var Spin = load("res://scenes/spin.tscn")
 var Move = load("res://scenes/move.tscn")
@@ -18,7 +18,11 @@ var ice3 = load("res://scenes/Ice/ice_3.tscn")
 var ice4 = load("res://scenes/Ice/ice_4.tscn")
 var ice_start = load("res://scenes/Ice/ice_start.tscn")
 var ice_end = load("res://scenes/Ice/ice_end.tscn")
+var igloo = load("res://scenes/Ice/igloo.tscn")
+var fort = load("res://scenes/Ice/fort.tscn")
 
+
+var water = load("res://scenes/water.tscn")
 
 
 var chance
@@ -38,14 +42,12 @@ var extraspawninterval = 400
 func _process(delta: float) -> void:
 	
 	sincelastspawn += (300 + Global.speedup) * delta
-	extrasincelastspawn += (300 + Global.speedup) * delta
 	
 	if sincelastspawn > spawninterval:
 		spawnbase()
-		sincelastspawn = 0
-	if extrasincelastspawn > extraspawninterval:
 		spawnextras()
-		extrasincelastspawn = 0
+		spawnwater()
+		sincelastspawn = 0
 
 func spawnspin():
 	var instance = Spin.instantiate()
@@ -86,6 +88,18 @@ func spawnice4():
 	var instance = ice4.instantiate()
 	Objects.add_child(instance)
 
+func spawnigloo():
+	var instance = igloo.instantiate()
+	Objects.add_child(instance)
+
+func spawnfort():
+	var instance = fort.instantiate()
+	Objects.add_child(instance)
+
+func spawnwater():
+	var instance = water.instantiate()
+	Water.add_child(instance)
+
 func rollchance():
 	chance = randf()
 
@@ -122,7 +136,10 @@ func spawnbase():
 	
 	if !isle_in_prog:
 		current_isle_length = 0
-		if chance > 0.6: time_between_isles += randi_range(0, 2)
+		rollchance()
+		if chance > 0.8:
+			time_between_isles += randi_range(0, 3)
+			printdbg("Change time between isles")
 		time_since_isle += 1
 	
 func spawn_isle_part():
@@ -137,11 +154,15 @@ func spawn_isle_part():
 			lastice = 2
 			spawnice2()
 		else: spawnice4()
-	if chance > 0.66:
+	if chance > 0.66 and chance < 0.97:
 		if lastice != 3:
 			lastice = 3
 			spawnice3()
 		else: spawnice4()
+	if chance > 0.97 and chance < 0.99:
+		spawnigloo()
+	if chance > 0.99:
+		spawnfort()
 
 
 

@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://b2gb2wr2awi7o"]
+
+[ext_resource type="Script" uid="uid://mom38vqfooqp" path="res://Scripts/ice_general.gd" id="1_wfc2i"]
+[ext_resource type="Texture2D" uid="uid://dih5j05t3nbt6" path="res://Images/Ice/fort.png" id="2_wfc2i"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_na4wi"]
+radius = 75.75006
+height = 1022.8411
+
+[node name="Ice" type="RigidBody2D" unique_id=1220415166]
+mass = 1000.0
+lock_rotation = true
+freeze = true
+script = ExtResource("1_wfc2i")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=973644324]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_wfc2i")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1241613232]
+scale = Vector2(0.3, 0.3)
+polygon = PackedVector2Array(-996.6666, 1000, -1000, 343.3333, -920, 300, -856.6666, 280, -796.6666, 266.66666, -683.3333, 243.33333, -600, 230, -490, 216.66666, -396.66666, 213.33333, -283.3333, 210, -176.66666, 210, -50, 220, 90, 226.66666, 183.33333, 233.33333, 303.3333, 240, 420, 240, 526.6666, 253.33333, 616.6666, 266.66666, 690, 276.66666, 760, 283.3333, 826.6666, 293.3333, 893.3333, 303.3333, 1000, 320, 1000, 1003.3333)
+
+[node name="Is on ice" type="Area2D" parent="." unique_id=506361278]
+scale = Vector2(0.3, 0.3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Is on ice" unique_id=46816915]
+position = Vector2(-519.99994, 159.99997)
+rotation = 1.4224434
+shape = SubResource("CapsuleShape2D_na4wi")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Is on ice" unique_id=2052701339]
+position = Vector2(489.9999, 166.66664)
+rotation = 1.6580628
+shape = SubResource("CapsuleShape2D_na4wi")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="body_entered" from="Is on ice" to="." method="_on_is_on_ice_body_entered"]

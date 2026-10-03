@@ -4,9 +4,11 @@ extends RichTextLabel
 @onready var anim = get_node("ScoreAnim")
 
 var last = "0"
+var texti
 
 func _process(_delta: float) -> void:
-	if last != str(Global.score):
-		self.set_text(" " + str(Global.score))
+	texti = str(round(Global.speedup - Global.tempspeedupamount)).replace(".0", "")
+	if last != texti and int(texti) > int(last):
+		self.set_text(" " + texti)
 		anim.play("Add")
-	last = str(Global.score)
+	last = texti

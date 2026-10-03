@@ -13,6 +13,8 @@ var currentshowfps = false
 @onready var Playbtn = get_node("../PlayButton")
 @onready var Settingsbtn = self
 @onready var Backbtn = get_node("../Back")
+@onready var Tutorbtn = get_node("../Tutorial")
+
 
 
 var fps_settings = {
@@ -91,6 +93,7 @@ func _on_pressed() -> void:
 	Playbtn.disabled = true
 	Settingsbtn.disabled = true
 	Backbtn.disabled = true
+	Tutorbtn.disabled = true
 
 
 func _on_back_button_pressed() -> void:
@@ -98,6 +101,7 @@ func _on_back_button_pressed() -> void:
 	Playbtn.disabled = false
 	Settingsbtn.disabled = false
 	Backbtn.disabled = false
+	Tutorbtn.disabled = false
 
 func _on_fps_item_selected(index: int) -> void:
 	Engine.max_fps = fps_settings[index]
@@ -144,6 +148,6 @@ func find_item_index_by_text_list(list, target_text):
 			return i
 	return -1
 
-func printdbg(text: String):
+func printdbg(texti: String):
 	if Global.DEBUG:
-		print(text)
+		print(texti)

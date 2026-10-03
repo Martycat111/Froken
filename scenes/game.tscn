@@ -4,11 +4,10 @@
 [ext_resource type="Script" uid="uid://b782mnlxdie7c" path="res://Scripts/fpscount.gd" id="1_iywne"]
 [ext_resource type="Script" uid="uid://dluo04qt6etro" path="res://Scripts/spawner.gd" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://bn6cpuux0f4k2" path="res://Scripts/score.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://bgoya2kqwi1u4" path="res://Scripts/Jumpsleft.gd" id="4_gee14"]
 [ext_resource type="Texture2D" uid="uid://cw1wbxttywpdc" path="res://Images/bir.png" id="4_lquwl"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2b7dg"]
-radius = 120.39465
-height = 426.31592
+[ext_resource type="PackedScene" uid="uid://blumyaltfd3x1" path="res://scenes/water.tscn" id="6_p57ef"]
+[ext_resource type="Texture2D" uid="uid://q21pol0sg54c" path="res://Images/fade.png" id="7_u5sy4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gpr32"]
 size = Vector2(207, 1201)
@@ -59,6 +58,59 @@ _data = {
 &"RESET": SubResource("Animation_lquwl")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2b7dg"]
+radius = 120.39465
+height = 426.31592
+
+[sub_resource type="Animation" id="Animation_gee14"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0tnpc"]
+resource_name = "fade"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vtaks"]
+_data = {
+&"RESET": SubResource("Animation_gee14"),
+&"fade": SubResource("Animation_0tnpc")
+}
+
 [node name="Game" type="Node2D" unique_id=583196749]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=640239660]
@@ -74,19 +126,6 @@ theme_override_font_sizes/font_size = 30
 text = "FPS: 0 "
 script = ExtResource("1_iywne")
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=2088081453]
-position = Vector2(556, 328)
-scale = Vector2(0.50666666, 0.50666666)
-script = ExtResource("1_1bvp3")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1890779024]
-position = Vector2(15.789461, 7.894723)
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_2b7dg")
-
-[node name="Player" type="Sprite2D" parent="Player" unique_id=871632026]
-texture = ExtResource("4_lquwl")
-
 [node name="Dead" type="Area2D" parent="." unique_id=1433644209]
 position = Vector2(2100, 400)
 
@@ -95,7 +134,7 @@ position = Vector2(-2663, -101.5)
 shape = SubResource("RectangleShape2D_gpr32")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Dead" unique_id=732646070]
-position = Vector2(-1546, 613)
+position = Vector2(-1546, 550)
 shape = SubResource("RectangleShape2D_deeij")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Dead" unique_id=436581556]
@@ -112,7 +151,7 @@ shape = SubResource("RectangleShape2D_h2yge")
 script = ExtResource("3_h2yge")
 
 [node name="Objects" type="Node2D" parent="." unique_id=374210569]
-position = Vector2(2000, 550)
+position = Vector2(2000, 520)
 
 [node name="Extras" type="Node2D" parent="." unique_id=1737104586]
 position = Vector2(2000, 280)
@@ -132,6 +171,67 @@ script = ExtResource("4_1bvp3")
 
 [node name="ScoreAnim" type="AnimationPlayer" parent="Score" unique_id=1690959736]
 libraries/ = SubResource("AnimationLibrary_7mycd")
+
+[node name="Jumpsleft" type="RichTextLabel" parent="." unique_id=1846372062]
+offset_left = -375.0
+offset_top = -150.0
+offset_right = 313.0
+offset_bottom = -75.0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 34
+theme_override_font_sizes/normal_font_size = 47
+text = " 0"
+scroll_active = false
+script = ExtResource("4_gee14")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=2088081453]
+position = Vector2(556, 328)
+scale = Vector2(0.50666666, 0.50666666)
+floor_stop_on_slope = false
+floor_block_on_wall = false
+script = ExtResource("1_1bvp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1890779024]
+position = Vector2(15.789461, 7.894723)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_2b7dg")
+
+[node name="Player" type="Sprite2D" parent="Player" unique_id=871632026]
+texture = ExtResource("4_lquwl")
+
+[node name="Water" type="Node2D" parent="." unique_id=142481923]
+position = Vector2(1800, 814)
+
+[node name="Water" parent="Water" unique_id=516628050 instance=ExtResource("6_p57ef")]
+position = Vector2(-2256, 1.9999999)
+
+[node name="Water2" parent="Water" unique_id=1967867410 instance=ExtResource("6_p57ef")]
+position = Vector2(-1856, 2)
+
+[node name="Water3" parent="Water" unique_id=1277531060 instance=ExtResource("6_p57ef")]
+position = Vector2(-1456, 2)
+
+[node name="Water4" parent="Water" unique_id=1082198143 instance=ExtResource("6_p57ef")]
+position = Vector2(-1056, 2)
+
+[node name="Water5" parent="Water" unique_id=928474832 instance=ExtResource("6_p57ef")]
+position = Vector2(-656, 2)
+
+[node name="Water6" parent="Water" unique_id=1870752852 instance=ExtResource("6_p57ef")]
+position = Vector2(-257, 2)
+
+[node name="Water7" parent="Water" unique_id=1842974812 instance=ExtResource("6_p57ef")]
+position = Vector2(143, 2)
+
+[node name="Fade" type="Sprite2D" parent="." unique_id=1778026740]
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(612, 461.00003)
+scale = Vector2(176.99998, 93.899994)
+texture = ExtResource("7_u5sy4")
+
+[node name="Fademan" type="AnimationPlayer" parent="Fade" unique_id=1563280067]
+libraries/ = SubResource("AnimationLibrary_vtaks")
 
 [connection signal="body_entered" from="Dead" to="Player" method="_on_death_body_entered"]
 [connection signal="body_entered" from="MoveBack" to="Player" method="_on_move_back_body_entered"]

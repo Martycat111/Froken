@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
+@onready var Fademan = get_node("../Fade/Fademan")
+
 var titlescene = load("res://scenes/Titlescreen.tscn")
 
 var spin_add_velocity = 400
 
-var x_velocity = 0
 var x_drag = 200
 
 var rotate_amount = 5
@@ -47,6 +48,12 @@ var DEBUG = Global.DEBUG
 
 
 func _physics_process(delta: float) -> void:
+	#global can access the current amount of temp speedup
+	Global.tempspeedupamount = tempspeedup
+	
+	#global can access the current amount of jumps left
+	Global.jumpsleft = numjumpsleft
+	
 	#jump count and stop
 	if numjumpsleft < 0 or numjumpsleft == 0:
 		canjump = false
@@ -92,11 +99,13 @@ func _physics_process(delta: float) -> void:
 		rotate_velocity = rotate_terminal_velocity
 	
 	#rotate with speed
-	if (300 + Global.speedup) > 400:
+	if (300 + Global.speedup) / 600 > 2:
 		rotate_velocity += (300 + Global.speedup) / 600
 	
 	#gravity
-	velocity += get_gravity() * delta
+	var gravity = get_gravity() / 1.3
+	velocity += gravity * delta
+	
 	#hold time
 	if holding: hold_time += delta
 	#speedup
@@ -131,6 +140,7 @@ func _physics_process(delta: float) -> void:
 
 	#ramp jump
 	if wasonfloor and !is_on_floor():
+		
 		#was on floor now is not
 		
 		# speed check                                   and      floor angle was big enough                             and (self explanatory) sec
@@ -139,11 +149,14 @@ func _physics_process(delta: float) -> void:
 			rampjump()
 			
 		#failure code
-		if current_floor_session_max_angle > ramp_jump_angle_threshold:
-			printdbg("failed b: " + str(current_floor_session_max_angle) + " > " + str(ramp_jump_angle_threshold))
-			
 		if 300 + Global.speedup < ramp_jump_threshold:
 			printdbg("failed a")
+		
+		if current_floor_session_max_angle > ramp_jump_angle_threshold:
+			printdbg("failed b: " + str(current_floor_session_max_angle) + " > " + str(ramp_jump_angle_threshold))
+		
+		if time_on_floor < 0.2:
+			printdbg("failed c")
 		
 		was_time_since_check = was_check_rate + 1
 		current_floor_session_max_angle = 0
@@ -194,7 +207,6 @@ func _input(event):
 
 func hitjump():
 	Global.score += 30
-	x_velocity = 300
 	velocity.y = -600
 	
 func hitspin():
@@ -208,6 +220,7 @@ func hitspin():
 	
 func hitmove():
 	temporaryspeedup(200)
+	velocity.y -= 150
 	Global.speedup += 5
 
 
@@ -218,7 +231,6 @@ func _on_death_body_entered(body: Node2D) -> void:
 
 func _on_move_back_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
-		x_velocity = -500
 		velocity.y = 200
 
 func temporaryspeedup(amount):
@@ -229,6 +241,8 @@ func temporaryspeedup(amount):
 	tempspeed = true
 
 func titlescreen():
+	Fademan.play("fade")
+	await Fademan.animation_finished
 	Global.score = 0
 	Global.speedup = 0
 	var title = titlescene.instantiate()
@@ -240,7 +254,15 @@ func printdbg(text: String):
 		print(text)
 
 func rampjump():
-	velocity.y -= Global.speedup
+	if holding:
+		printdbg("fayul ramp jump: jumping.")
+		return
+	if Global.speedup > 500:
+		printdbg("ramp speedup")
+		velocity.y -= Global.speedup
+	else:
+		printdbg("ramp default")
+		velocity.y -= 500
 	printdbg("Ramp jump")
 
 func _exit_tree() -> void:

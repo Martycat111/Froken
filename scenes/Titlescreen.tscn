@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://svk6b55a2lhs" path="res://Images/Titlescreen/Sign.png" id="1_r0gry"]
 [ext_resource type="Texture2D" uid="uid://db2sphstfps02" path="res://Images/Titlescreen/back.png" id="2_8wacg"]
 [ext_resource type="Texture2D" uid="uid://mdxlp4qp6y1p" path="res://Images/Titlescreen/Play.png" id="4_2ptb1"]
+[ext_resource type="Script" uid="uid://dnjt744cfeys7" path="res://Scripts/play_button.gd" id="5_ae2uc"]
+[ext_resource type="Texture2D" uid="uid://dun3nqafgbm83" path="res://Images/Titlescreen/Tutorial.png" id="5_mq2qu"]
 [ext_resource type="Texture2D" uid="uid://ykbvda4wpm82" path="res://Images/Titlescreen/Background.png" id="5_xxkhp"]
 [ext_resource type="Texture2D" uid="uid://bmwxut2ojh2yt" path="res://Images/Titlescreen/Settings.png" id="6_5u5ic"]
 [ext_resource type="Script" uid="uid://dvodxnucuam4" path="res://Scripts/settings.gd" id="7_ly5u4"]
@@ -65,7 +67,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_mq2qu"]
 resource_name = "fadeout"
-length = 0.19999999999999998
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -73,7 +75,7 @@ tracks/0/path = NodePath("CanvasModulate:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -92,7 +94,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(0.4506257, 2.5491211),
 "update": 0,
-"values": [Vector2(220, 0), Vector2(178, 150)]
+"values": [Vector2(220, 0), Vector2(178, 100)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -142,30 +144,40 @@ scale = Vector2(0.22, 0.22)
 texture = ExtResource("2_8wacg")
 
 [node name="PlayButton" type="Button" parent="Banner" unique_id=749028104]
-offset_left = -575.0
-offset_top = -300.0
-offset_right = 1433.0
-offset_bottom = 708.0
-scale = Vector2(0.6, 0.6)
+offset_left = -525.0
+offset_top = -600.0
+offset_right = 1483.0
+offset_bottom = 408.0
+scale = Vector2(0.55, 0.55)
 icon = ExtResource("4_2ptb1")
+flat = true
+script = ExtResource("5_ae2uc")
+
+[node name="Tutorial" type="Button" parent="Banner" unique_id=418993280]
+offset_left = -525.0
+offset_top = -75.0
+offset_right = 1483.0
+offset_bottom = 933.0
+scale = Vector2(0.55, 0.55)
+icon = ExtResource("5_mq2qu")
 flat = true
 
 [node name="Settings" type="Button" parent="Banner" unique_id=27783422]
-offset_left = -575.0
-offset_top = 300.0
-offset_right = 1433.0
-offset_bottom = 1308.0
-scale = Vector2(0.6, 0.6)
+offset_left = -525.0
+offset_top = 450.0
+offset_right = 1483.0
+offset_bottom = 1458.0
+scale = Vector2(0.55, 0.55)
 icon = ExtResource("6_5u5ic")
 flat = true
 script = ExtResource("7_ly5u4")
 
 [node name="Back" type="Button" parent="Banner" unique_id=1858004018]
-offset_left = -575.0
-offset_top = 900.0
-offset_right = 1433.0
-offset_bottom = 1908.0
-scale = Vector2(0.6, 0.6)
+offset_left = -525.0
+offset_top = 950.0
+offset_right = 1483.0
+offset_bottom = 1958.0
+scale = Vector2(0.55, 0.55)
 icon = ExtResource("8_mq2qu")
 flat = true
 
@@ -282,6 +294,7 @@ text = "Resolution:"
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=494541592]
 
 [connection signal="pressed" from="Banner/PlayButton" to="AnimationPlayer" method="_on_play_button_pressed"]
+[connection signal="pressed" from="Banner/Tutorial" to="AnimationPlayer" method="_on_tutorial_pressed"]
 [connection signal="pressed" from="Banner/Settings" to="Banner/Settings" method="_on_pressed"]
 [connection signal="pressed" from="Banner/Back" to="Banner/Settings" method="exit_game"]
 [connection signal="pressed" from="Settingsmenu/BackButton" to="Banner/Settings" method="_on_back_button_pressed"]

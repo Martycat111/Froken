@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://blumyaltfd3x1"]
+
+[ext_resource type="Texture2D" uid="uid://d07wdcniniusa" path="res://Images/water.png" id="1_bdk6y"]
+[ext_resource type="Script" uid="uid://dift3ibl0fs62" path="res://Scripts/water.gd" id="2_s3811"]
+
+[node name="Water" type="Sprite2D" unique_id=516628050]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_bdk6y")
+script = ExtResource("2_s3811")

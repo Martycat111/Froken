@@ -10,3 +10,11 @@ and to learn some art in the process.
 # Gameplay
 You play as a bird-like creature, in an antarctic wasteland.
 You must try to survive as you fly from isle to isle.
+Get points as you fly.
+Try to keep out of the water.
+
+## links:
+
+[Stardance](https://stardance.hackclub.com/projects/53994)
+
+[Itch](https://martycat111.itch.io/froken)

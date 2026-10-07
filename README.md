@@ -14,10 +14,10 @@ Get points as you fly.
 Try to keep out of the water.
 
 ## Cool buttons:
-![Play_online](https://img.shields.io/badge/Play_Online-blue?style=flat-square)
+[![Play_online](https://img.shields.io/badge/Play_Online-blue?style=flat-square)](https://martycat111.itch.io/froken)
 [![Linux](https://img.shields.io/badge/Linux-Download-blue?style=flat-square&logo=linux&logoColor=yellow)](https://github.com/Martycat111/Froken/releases/download/final/build-linux.zip)
-![Web](https://img.shields.io/badge/Web-Download-blue?style=flat-square&logo=html5&logoColor=yellow)(https://github.com/Martycat111/Froken/releases/download/final/web.zip)
-![Windows](https://img.shields.io/badge/Windows-Download-blue?style=flat-square&logo=windows&logoColor=yellow)(https://github.com/Martycat111/Froken/releases/download/final/build-win.zip)
+[![Web](https://img.shields.io/badge/Web-Download-blue?style=flat-square&logo=html5&logoColor=yellow)](https://github.com/Martycat111/Froken/releases/download/final/web.zip)
+[![Windows](https://img.shields.io/badge/Windows-Download-blue?style=flat-square&logo=windows&logoColor=yellow)](https://github.com/Martycat111/Froken/releases/download/final/build-win.zip)
 
 
 ## Links:

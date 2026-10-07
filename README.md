@@ -14,10 +14,10 @@ Get points as you fly.
 Try to keep out of the water.
 
 ## Cool buttons:
-![Play_online](https://img.shields.io/badge/Play_Online-blue?style=flat-square&link=https://martycat111.itch.io/froken)
-![Linux](https://img.shields.io/badge/Linux-Download-blue?style=flat-square&logo=linux&logoColor=yellow&link=https%3A%2F%2Fgithub.com%2FMartycat111%2FFroken%2Freleases%2Fdownload%2Ffinal%2Fbuild-linux.zip)
-![Web](https://img.shields.io/badge/Web-Download-blue?style=flat-square&logo=html5&logoColor=yellow&link=https%3A%2F%2Fgithub.com%2FMartycat111%2FFroken%2Freleases%2Fdownload%2Ffinal%2Fbuild-web.zip)
-![Windows](https://img.shields.io/badge/Windows-Download-blue?style=flat-square&logo=windows&logoColor=yellow&link=https%3A%2F%2Fgithub.com%2FMartycat111%2FFroken%2Freleases%2Fdownload%2Ffinal%2Fbuild-win.zip)
+![Play_online](https://img.shields.io/badge/Play_Online-blue?style=flat-square)
+![Linux](https://img.shields.io/badge/Linux-Download-blue?style=flat-square&logo=linux&logoColor=yellow)(https://github.com/Martycat111/Froken/releases/download/final/build-linux.zip)
+![Web](https://img.shields.io/badge/Web-Download-blue?style=flat-square&logo=html5&logoColor=yellow)(https://github.com/Martycat111/Froken/releases/download/final/web.zip)
+![Windows](https://img.shields.io/badge/Windows-Download-blue?style=flat-square&logo=windows&logoColor=yellow)(https://github.com/Martycat111/Froken/releases/download/final/build-win.zip)
 
 
 ## Links:

@@ -1,7 +1,11 @@
 # Summary
-A silly game made in Godot.
-I made this project to learn some fundamentals of Godot,
-and to learn some art in the process.
+A silly game made in Godot.  
+I made this project to learn some fundamentals of Godot,  
+and to learn some art in the process.  
+
+This only for now, don't expect (or even hope for) rapid development.
+No dependencies, just unzip then run the main executable.  
+Thanks for trying out my game!  
 
 # Quick-Play:
 To play as quick as possible,  

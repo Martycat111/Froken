@@ -13,7 +13,13 @@ You must try to survive as you fly from isle to isle.
 Get points as you fly.
 Try to keep out of the water.
 
-## links:
+## Downloads:
+![Linux](https://img.shields.io/badge/Linux-Download-blue?style=flat-square&logo=linux&logoColor=purple&link=https%3A%2F%2Fgithub.com%2FMartycat111%2FFroken%2Freleases%2Fdownload%2Ffinal%2Fbuild-linux.zip)
+![Web](https://img.shields.io/badge/Web-Download-blue?style=flat-square&logo=html5&logoColor=purple&link=https%3A%2F%2Fgithub.com%2FMartycat111%2FFroken%2Freleases%2Fdownload%2Ffinal%2Fbuild-web.zip)
+![Windows](https://img.shields.io/badge/Windows-Download-blue?style=flat-square&logo=windows&logoColor=purple&link=https%3A%2F%2Fgithub.com%2FMartycat111%2FFroken%2Freleases%2Fdownload%2Ffinal%2Fbuild-win.zip)
+
+
+## Links:
 
 [Stardance](https://stardance.hackclub.com/projects/53994)
 

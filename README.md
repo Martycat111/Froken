@@ -19,6 +19,11 @@ Try to keep out of the water.
 [![Web](https://img.shields.io/badge/Web-Download-blue?style=flat-square&logo=html5&logoColor=yellow)](https://github.com/Martycat111/Froken/releases/download/final/web.zip)
 [![Windows](https://img.shields.io/badge/Windows-Download-blue?style=flat-square&logo=windows&logoColor=yellow)](https://github.com/Martycat111/Froken/releases/download/final/build-win.zip)
 
+## How to contribute:
+* Submit new ideas on [Ideas](https://github.com/Martycat111/Froken/issues/new?q=is:issue+state:open "this page")
+* Clone this Repo, open it in Godot, and make changes.
+  Then, make a pull request.
+* Check out my Stardance below! :)
 
 ## Links:
 [Stardance](https://stardance.hackclub.com/projects/53994)
